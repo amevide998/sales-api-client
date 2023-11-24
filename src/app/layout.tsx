@@ -1,7 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import StickyFooter from "@/components/footer/StickyFooter";
 import ButtonAppBar from "@/components/navbar/BasicNavbar";
 
 const inter = Inter({ subsets: ['latin'] })
@@ -25,7 +24,7 @@ export default function RootLayout({
           <body className={inter.className}>
               <ButtonAppBar />
                 {children}
-              <StickyFooter />
+              {/*<StickyFooter />*/}
           </body>
     </html>
   )

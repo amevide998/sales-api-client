@@ -14,6 +14,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import customTheme from "@/theme/theme";
+import {useState} from "react";
+import {Alert, CircularProgress, InputAdornment} from "@mui/material";
+import {useRouter} from "next/navigation";
+import IconButton from "@mui/material/IconButton";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+
 
 function Copyright(props: any) {
     return (
@@ -30,6 +36,47 @@ function Copyright(props: any) {
 
 
 export default function SignInSide() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [isButtonDisable, setIsButtonDisable] = useState(false);
+    const [errorLogin, setErrorLogin] = useState("")
+    const [showPassword, setShowPassword] = useState(false);
+
+    const router = useRouter();
+
+    
+
+
+
+    const Login = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        try {
+            setIsButtonDisable(true)
+            const res = await fetch(`https://go-gin-on-koyeb-hdscode.koyeb.app/cashier/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: username,
+                    password: password,
+                }),
+            })
+            const resBody = await res.json()
+            if(!res.ok){
+                setErrorLogin(resBody.error)
+            }else{
+                setErrorLogin("")
+                sessionStorage.setItem("accessToken", resBody.data.token)
+                router.push("/")
+            }
+            setIsButtonDisable(false)
+        }catch (err){
+            console.log(err)
+            setIsButtonDisable(false)
+        }
+
+    }
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -78,11 +125,13 @@ export default function SignInSide() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
+                                id="name"
+                                label="name"
+                                name="name"
+                                autoComplete="name"
                                 autoFocus
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                             />
                             <TextField
                                 margin="normal"
@@ -90,21 +139,45 @@ export default function SignInSide() {
                                 fullWidth
                                 name="password"
                                 label="Password"
-                                type="password"
+                                type={showPassword ? 'text' : 'password'}
                                 id="password"
                                 autoComplete="current-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                InputProps={{
+                                    endAdornment : (
+                                        (<InputAdornment position="end">
+                                            <IconButton
+                                                onClick={()=> setShowPassword(!showPassword)}
+                                            >
+                                                {
+                                                    showPassword ? (<Visibility />)
+                                                        : (<VisibilityOff/>)
+                                                }
+                                            </IconButton>
+                                        </InputAdornment>)
+                                    )
+                                }}
                             />
+
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
                                 label="Remember me"
                             />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
+                            {
+                                errorLogin === "" ? "" : (<Alert severity="error">{errorLogin}</Alert>)
+                            }
+                            {/*@ts-ignore*/}
+                            <Button onClick={Login}
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    disabled={isButtonDisable}
                             >
-                                Sign In
+                                {
+                                    isButtonDisable ? (<CircularProgress />) : " Sign In"
+                                }
                             </Button>
                             <Grid container>
                                 <Grid item xs>
