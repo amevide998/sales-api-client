@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
+import customTheme from "@/theme/theme";
 
 function Copyright() {
     return (
@@ -20,12 +21,9 @@ function Copyright() {
     );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
-
 export default function StickyFooter() {
     return (
-        <ThemeProvider theme={defaultTheme}>
+        <ThemeProvider theme={customTheme}>
             <Box
                 sx={{
                     display: 'flex',

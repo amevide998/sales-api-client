@@ -18,11 +18,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-      <ButtonAppBar />
-      {children}
-      <StickyFooter />
-      </body>
+        <head>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+            <title>sales api</title>
+        </head>
+          <body className={inter.className}>
+              <ButtonAppBar />
+                {children}
+              <StickyFooter />
+          </body>
     </html>
   )
 }
