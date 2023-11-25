@@ -95,7 +95,7 @@ export default function SignInSide() {
                     sm={4}
                     md={7}
                     sx={{
-                        backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+                        backgroundImage: 'url(https://res.cloudinary.com/dgcfjbqrl/image/upload/v1700908922/cashier/mhzy2uivw6obyi76a9dg.jpg)',
                         backgroundRepeat: 'no-repeat',
                         backgroundColor: (t) =>
                             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -117,7 +117,7 @@ export default function SignInSide() {
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            Sign in
+                            CashierPro
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             <TextField
@@ -186,12 +186,23 @@ export default function SignInSide() {
                             </Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link href="#" variant="body2">
+                                    <Link
+                                        href="/forgot-password"
+                                        variant="body2"
+                                        sx={{
+                                            color: "secondary.main",
+                                        }}
+                                    >
                                         Forgot password?
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Link href="#" variant="body2">
+                                    <Link href="/signup"
+                                          variant="body2"
+                                          sx={{
+                                              color: "secondary.main",
+                                          }}
+                                    >
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>
