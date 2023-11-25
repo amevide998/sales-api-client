@@ -41,11 +41,9 @@ export default function SignInSide() {
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     const [errorLogin, setErrorLogin] = useState("")
     const [showPassword, setShowPassword] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false)
 
     const router = useRouter();
-
-    
-
 
 
     const Login = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -56,6 +54,7 @@ export default function SignInSide() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "remember-me": rememberMe.toString(),
                 },
                 body: JSON.stringify({
                     name: username,
@@ -146,7 +145,9 @@ export default function SignInSide() {
                                 onChange={(e) => setPassword(e.target.value)}
                                 InputProps={{
                                     endAdornment : (
-                                        (<InputAdornment position="end">
+                                        (<InputAdornment position="end"
+                                                         suppressHydrationWarning
+                                        >
                                             <IconButton
                                                 onClick={()=> setShowPassword(!showPassword)}
                                             >
@@ -161,7 +162,11 @@ export default function SignInSide() {
                             />
 
                             <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
+                                control={<Checkbox
+                                    value={rememberMe}
+                                    color="primary"
+                                    onChange={(e) => setRememberMe(e.target.checked)}
+                                />}
                                 label="Remember me"
                             />
                             {
