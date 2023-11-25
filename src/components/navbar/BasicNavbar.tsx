@@ -9,8 +9,16 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import customTheme from "@/theme/theme";
 import {ThemeProvider} from "@mui/material/styles";
+import {usePathname, useRouter} from "next/navigation";
 
 export default function ButtonAppBar() {
+
+    const pathname = usePathname()
+
+    if(pathname === "/login"){
+        return null
+    }
+
     return (
         <ThemeProvider theme={customTheme}>
             <Box
