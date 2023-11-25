@@ -1,9 +1,8 @@
-import SignIn from "@/components/signin/SignIn";
 import SignInSide from "@/components/signin/SignInSide";
+import {useParams} from "next/navigation";
 
 export default function SignInPage() {
     return (
-            // <h1>Sign In</h1>
         <SignInSide />
     )
 }
